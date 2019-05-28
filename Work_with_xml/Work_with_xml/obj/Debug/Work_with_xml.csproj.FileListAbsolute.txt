@@ -1,0 +1,11 @@
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.csprojAssemblyReference.cache
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.Form1.resources
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.Properties.Resources.resources
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.csproj.GenerateResource.cache
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.csproj.CoreCompileInputs.cache
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\bin\Debug\Work_with_xml.exe.config
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\bin\Debug\Work_with_xml.exe
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\bin\Debug\Work_with_xml.pdb
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.exe
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.pdb
+D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.Form2.resources
