@@ -56,7 +56,7 @@ namespace Work_with_xml
                 Description = description;
                 InStorage = in_storage;
             }
-            // book[] books = new book[10] ;//10 элементов макс
+             
          /*   [Serializable()]
             [System.Xml.Serialization.XmlRoot("Catalog")]
             public class Catalog
@@ -66,7 +66,7 @@ namespace Work_with_xml
                 public book[] book_ { get; set; }
             }*/
         }
-
+        public Book[] newbook;
         private void Button1_Click(object sender, EventArgs e)
         {
 
@@ -79,26 +79,22 @@ namespace Work_with_xml
             xRoot.Namespace = null;
             xRoot.IsNullable = true;
             XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
-            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            dataGridView1.DataSource = newbook;
+            textBox1.Text = newbook[i].Author;
+            textBox2.Text = newbook[i].Title;
+            textBox3.Text = newbook[i].Genre;
+            textBox4.Text = newbook[i].Price;
+            textBox5.Text = newbook[i].PublishDate;
+            textBox6.Text = newbook[i].Description;
+            textBox7.Text = newbook[i].InStorage;
+            if (i + 1== newbook.Length)
             {
-                Book[] newbook = (Book[])formatter.Deserialize(fs);
-                dataGridView1.DataSource = newbook;
-                textBox1.Text = newbook[i].Author;
-                textBox2.Text = newbook[i].Title;
-                textBox3.Text = newbook[i].Genre;
-                textBox4.Text = newbook[i].Price;
-                textBox5.Text = newbook[i].PublishDate;
-                textBox6.Text = newbook[i].Description;
-                textBox7.Text = newbook[i].InStorage;
-                if (i + 1== newbook.Length)
-                {
-                    button1.Enabled = false;
-                };
-                if (i - 1 != -1)
-                {
-                    button2.Enabled = true;
-                };
-            }
+                button1.Enabled = false;
+            };
+            if (i - 1 != -1)
+            {
+                button2.Enabled = true;
+            };
 
         }
 
@@ -113,42 +109,38 @@ namespace Work_with_xml
             xRoot.Namespace = null;
             xRoot.IsNullable = true;
             XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
-            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            dataGridView1.DataSource = newbook;
+            textBox1.Text = newbook[i].Author;
+            textBox2.Text = newbook[i].Title;
+            textBox3.Text = newbook[i].Genre;
+            textBox4.Text = newbook[i].Price;
+            textBox5.Text = newbook[i].PublishDate;
+            textBox6.Text = newbook[i].Description;
+            textBox7.Text = newbook[i].InStorage;
+            if (i + 1 == newbook.Length)
             {
-                Book[] newbook = (Book[])formatter.Deserialize(fs);
-                dataGridView1.DataSource = newbook;
-                textBox1.Text = newbook[i].Author;
-                textBox2.Text = newbook[i].Title;
-                textBox3.Text = newbook[i].Genre;
-                textBox4.Text = newbook[i].Price;
-                textBox5.Text = newbook[i].PublishDate;
-                textBox6.Text = newbook[i].Description;
-                textBox7.Text = newbook[i].InStorage;
-                if (i + 1 == newbook.Length)
-                {
-                    button1.Enabled = false;
-                }
-                else
-                {
-                    button1.Enabled = true;
-                };
-                if (i - 1 != -1)
-                {
-                    button2.Enabled = true;
-                }
-                else
-                {
-                    button2.Enabled = false;
-                };
+                button1.Enabled = false;
             }
-        }
+            else
+            {
+                button1.Enabled = true;
+            };
+            if (i - 1 != -1)
+            {
+                button2.Enabled = true;
+            }
+            else
+            {
+                button2.Enabled = false;
+            };
+            }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
 
             //Создание аттрибута для указания новых свойств сериализации
-             XmlRootAttribute xRoot = new XmlRootAttribute();
+            XmlRootAttribute xRoot = new XmlRootAttribute();
             xRoot.ElementName = "Catalog";
             xRoot.Namespace = null;
             xRoot.IsNullable = true;
@@ -157,9 +149,9 @@ namespace Work_with_xml
             // десериализация
             // XmlSerializer formatter = new XmlSerializer(typeof(book[]));
 
-            /*using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
             {
-                Book[] newbook = (Book[])formatter.Deserialize(fs);
+                newbook = (Book[])formatter.Deserialize(fs);
                 dataGridView1.DataSource = newbook;
                 textBox1.Text = newbook[i].Author;
                 textBox2.Text = newbook[i].Title;
@@ -172,7 +164,7 @@ namespace Work_with_xml
                 {
                     button1.Enabled = false;
                 };
-            }*/
+            }
         }
 
         private void Button5_Click(object sender, EventArgs e)
@@ -226,20 +218,30 @@ namespace Work_with_xml
 
                 // сериализация
                 //Ломает файл
+                newbook[i].Author = textBox1.Text;
+                newbook[i].Title = textBox2.Text;
+                newbook[i].Genre = textBox3.Text;
+                newbook[i].Price = textBox4.Text;
+                newbook[i].PublishDate = textBox5.Text;
+                newbook[i].Description = textBox6.Text;
+                newbook[i].InStorage = textBox7.Text;
                 using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
                 {
-                    Book[] newbook = (Book[])formatter.Deserialize(fs);
-                    dataGridView1.DataSource = newbook;
-                    newbook[i].Author = textBox1.Text;
+                    formatter.Serialize(fs, newbook);
+                    /*newbook[i].Author = textBox1.Text;
                     newbook[i].Title = textBox2.Text;
                     newbook[i].Genre = textBox3.Text;
                     newbook[i].Price = textBox4.Text;
                     newbook[i].PublishDate = textBox5.Text;
                     newbook[i].Description = textBox6.Text;
-                    newbook[i].InStorage = textBox7.Text;
-                    formatter.Serialize(fs, newbook);
-                    
-                }
+                    newbook[i].InStorage = textBox7.Text;*/
+                    /*using (FileStream fs1 = new FileStream("BooksCatalog1.xml", FileMode.OpenOrCreate))
+                    {
+                        formatter.Serialize(fs, newbook);
+                    }*/
+
+
+            }
                 flag_izm = false;
                 
             };
