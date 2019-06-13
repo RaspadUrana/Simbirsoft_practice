@@ -55,6 +55,8 @@ namespace Work_with_xml
                    public book[] book_ { get; set; }
                }*/
         }
+        public Book[] newbook;//изначально всё строилость под массив, переделывалось под список, но десериализация в список не работала так как надо.
+                            //в связи с этим было принято решение отказаться от добавления строк.
 
         private void Form2_Load(object sender, EventArgs e)
         {
@@ -65,7 +67,7 @@ namespace Work_with_xml
             XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
             using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
             {
-                Book[] newbook = (Book[])formatter.Deserialize(fs);
+                newbook = (Book[])formatter.Deserialize(fs);
                 dataGridView1.DataSource = newbook;
 
             }
@@ -74,6 +76,40 @@ namespace Work_with_xml
         private void Button1_Click(object sender, EventArgs e)
         {
             this.Close(); 
+        }
+
+        private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dataGridView1.Rows.Add();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            if (button2.Text == "Редактировать")
+            {
+                button2.Text = "Закончить редактирование";//А "редактирование" то где?
+                dataGridView1.EditMode = DataGridViewEditMode.EditOnKeystroke;
+
+            }
+            else
+            {
+                //Создание аттрибута для указания новых свойств сериализации
+                XmlRootAttribute xRoot = new XmlRootAttribute();
+                xRoot.ElementName = "Catalog";
+                xRoot.Namespace = null;
+                xRoot.IsNullable = true;
+                XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+                button2.Text = "Редактировать";
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, newbook);
+                }
+            }
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

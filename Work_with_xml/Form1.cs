@@ -33,9 +33,9 @@ namespace Work_with_xml
         [Serializable]
         public class Book
         {
-           [XmlAttribute]
-            public string id { get; set; }               //без паблика не уверен робит ли 
             public string Author { get; set; }
+            [XmlAttribute]
+            public Int32 id { get; set; }               //без паблика не уверен робит ли 
             public string Title { get; set; }
             public string Genre { get; set; }
             public string Price { get; set; }
@@ -45,9 +45,9 @@ namespace Work_with_xml
             public Book()
             { }
 
-            public Book(string key, string author, string title, string genre, string price, string publish_date, string description, string in_storage)
+            public Book(Int32 Id, string author, string title, string genre, string price, string publish_date, string description, string in_storage)
             {
-                id = key;
+                id = Id;
                 Author = author;
                 Title = title;
                 Genre = genre;
@@ -74,14 +74,10 @@ namespace Work_with_xml
 
             i = (i + 1);//мотаем счётчик вперёд
 
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Catalog";
-            xRoot.Namespace = null;
-            xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
             dataGridView1.DataSource = newbook;
             textBox1.Text = newbook[i].Author;
             textBox2.Text = newbook[i].Title;
+            textBox8.Text = newbook[i].id.ToString();
             textBox3.Text = newbook[i].Genre;
             textBox4.Text = newbook[i].Price;
             textBox5.Text = newbook[i].PublishDate;
@@ -104,14 +100,10 @@ namespace Work_with_xml
 
             i = --i;//мотаем счётчик назад на для того чтобы показалась пред. запись
 
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Catalog";
-            xRoot.Namespace = null;
-            xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
             dataGridView1.DataSource = newbook;
             textBox1.Text = newbook[i].Author;
             textBox2.Text = newbook[i].Title;
+            textBox8.Text = newbook[i].id.ToString();
             textBox3.Text = newbook[i].Genre;
             textBox4.Text = newbook[i].Price;
             textBox5.Text = newbook[i].PublishDate;
@@ -154,13 +146,14 @@ namespace Work_with_xml
                 newbook = (Book[])formatter.Deserialize(fs);
                 dataGridView1.DataSource = newbook;
                 textBox1.Text = newbook[i].Author;
+                textBox8.Text = newbook[i].id.ToString();
                 textBox2.Text = newbook[i].Title;
                 textBox3.Text = newbook[i].Genre;
                 textBox4.Text = newbook[i].Price;
                 textBox5.Text = newbook[i].PublishDate;
                 textBox6.Text = newbook[i].Description;
                 textBox7.Text = newbook[i].InStorage;
-                if (newbook[i+1].id=="")
+                if (newbook.Length==i)
                 {
                     button1.Enabled = false;
                 };
@@ -172,7 +165,7 @@ namespace Work_with_xml
             //TODO: создать иерархию
             //TODO: найти как это сделать
             Form2 newForm = new Form2();
-            newForm.Show();
+            newForm.ShowDialog();
 
         }
 
@@ -217,7 +210,8 @@ namespace Work_with_xml
                 XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
 
                 // сериализация
-                //Ломает файл
+                //Ломает файл 
+                //Через раз?
                 newbook[i].Author = textBox1.Text;
                 newbook[i].Title = textBox2.Text;
                 newbook[i].Genre = textBox3.Text;
@@ -241,10 +235,47 @@ namespace Work_with_xml
                     }*/
 
 
-            }
+                }
                 flag_izm = false;
                 
             };
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            Form3 newForm = new Form3();
+            newForm.ShowDialog();
+        }
+
+        private void Form1_Activated(object sender, EventArgs e)
+        {
+            //Создание аттрибута для указания новых свойств сериализации
+            XmlRootAttribute xRoot = new XmlRootAttribute();
+            xRoot.ElementName = "Catalog";
+            xRoot.Namespace = null;
+            xRoot.IsNullable = true;
+            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+
+            // десериализация
+            // XmlSerializer formatter = new XmlSerializer(typeof(book[]));
+
+            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            {
+                newbook = (Book[])formatter.Deserialize(fs);
+                dataGridView1.DataSource = newbook;
+                textBox1.Text = newbook[i].Author;
+                textBox8.Text = newbook[i].id.ToString();
+                textBox2.Text = newbook[i].Title;
+                textBox3.Text = newbook[i].Genre;
+                textBox4.Text = newbook[i].Price;
+                textBox5.Text = newbook[i].PublishDate;
+                textBox6.Text = newbook[i].Description;
+                textBox7.Text = newbook[i].InStorage;
+                if (newbook.Length == i)
+                {
+                    button1.Enabled = false;
+                };
+            }
         }
     }
 }

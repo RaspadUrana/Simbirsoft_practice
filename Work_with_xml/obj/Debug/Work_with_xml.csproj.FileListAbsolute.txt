@@ -9,3 +9,15 @@ D:\Practice\Work_1\Work_with_xml\Work_with_xml\bin\Debug\Work_with_xml.pdb
 D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.exe
 D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.pdb
 D:\Practice\Work_1\Work_with_xml\Work_with_xml\obj\Debug\Work_with_xml.Form2.resources
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\Work_with_xml.exe.config
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\Work_with_xml.exe
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\Work_with_xml.pdb
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.csprojAssemblyReference.cache
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.Form1.resources
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.Form2.resources
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.Properties.Resources.resources
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.csproj.GenerateResource.cache
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.csproj.CoreCompileInputs.cache
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.exe
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.pdb
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.Form3.resources

@@ -114,6 +114,7 @@
             this.button3.TabIndex = 6;
             this.button3.Text = "Добавить";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // label1
             // 
@@ -253,7 +254,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(322, 384);
+            this.ClientSize = new System.Drawing.Size(328, 384);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.button5);
@@ -278,6 +279,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form1";
             this.Text = "Просмотр данных о книгах";
+            this.Activated += new System.EventHandler(this.Form1_Activated);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
