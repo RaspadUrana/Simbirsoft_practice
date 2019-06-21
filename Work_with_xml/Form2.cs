@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using NLog;
 
 namespace Work_with_xml
 {
@@ -19,6 +20,12 @@ namespace Work_with_xml
         {
             InitializeComponent();
         }
+
+        public int i = 0;
+        public int[] arr=new int[100];
+        Logger logErr = LogManager.GetLogger("Errors");
+        Logger logInfo = LogManager.GetLogger("Info");
+
         [Serializable]
         public class Book
         {
@@ -30,11 +37,11 @@ namespace Work_with_xml
             public string Price { get; set; }
             public string PublishDate { get; set; }
             public string Description { get; set; }
-            public string InStorage { get; set; }
+            public bool InStorage { get; set; }
             public Book()
             { }
 
-            public Book(string key, string author, string title, string genre, string price, string publish_date, string description, string in_storage)
+            public Book(string key, string author, string title, string genre, string price, string publish_date, string description, bool in_storage)
             {
                 id = key;
                 Author = author;
@@ -60,16 +67,23 @@ namespace Work_with_xml
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Catalog";
-            xRoot.Namespace = null;
-            xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
-            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            try
             {
-                newbook = (Book[])formatter.Deserialize(fs);
-                dataGridView1.DataSource = newbook;
+                XmlRootAttribute xRoot = new XmlRootAttribute();
+                xRoot.ElementName = "Catalog";
+                xRoot.Namespace = null;
+                xRoot.IsNullable = true;
+                XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                {
+                    newbook = (Book[])formatter.Deserialize(fs);
+                    dataGridView1.DataSource = newbook;
 
+                }
+            }
+            catch
+            {
+                logErr.Error("Ошибка чтения файла");
             }
         }
 
@@ -80,36 +94,54 @@ namespace Work_with_xml
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1.Rows.Add();
+            //dataGridView1.Rows.Add();
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            if (button2.Text == "Редактировать")
+            try
             {
-                button2.Text = "Закончить редактирование";//А "редактирование" то где?
-                dataGridView1.EditMode = DataGridViewEditMode.EditOnKeystroke;
-
-            }
-            else
-            {
-                //Создание аттрибута для указания новых свойств сериализации
-                XmlRootAttribute xRoot = new XmlRootAttribute();
-                xRoot.ElementName = "Catalog";
-                xRoot.Namespace = null;
-                xRoot.IsNullable = true;
-                XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
-                button2.Text = "Редактировать";
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                if (button2.Text == "Редактировать")
                 {
-                    formatter.Serialize(fs, newbook);
+                    button2.Text = "Закончить редактирование";//А "редактирование" то где? //Fixed
+                    dataGridView1.EditMode = DataGridViewEditMode.EditOnKeystroke;
+                    i = 0;
+
                 }
+                else
+                {
+                    //Создание аттрибута для указания новых свойств сериализации
+                    XmlRootAttribute xRoot = new XmlRootAttribute();
+                    xRoot.ElementName = "Catalog";
+                    xRoot.Namespace = null;
+                    xRoot.IsNullable = true;
+                    XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+                    button2.Text = "Редактировать";
+                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                    {
+                        formatter.Serialize(fs, newbook);
+                    }
+                    for (int j = 0; j <= i; j++)
+                    {
+                        logInfo.Info("Изменения внесены в строку {String}(таблица)", arr[j].ToString());
+                    }
+                }
+            }
+            catch
+            {
+                logErr.Error("");
             }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void DataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            arr[i] = dataGridView1.CurrentRow.Index ;
+            i = i + 1;
         }
     }
 }

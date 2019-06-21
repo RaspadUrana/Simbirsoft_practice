@@ -44,12 +44,13 @@
             this.label7 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBox8 = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button6 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,9 +64,9 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(179, 307);
+            this.button1.Location = new System.Drawing.Point(179, 273);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 23);
+            this.button1.Size = new System.Drawing.Size(134, 20);
             this.button1.TabIndex = 1;
             this.button1.Text = "Следующая запись";
             this.button1.UseVisualStyleBackColor = true;
@@ -74,9 +75,9 @@
             // button2
             // 
             this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(29, 307);
+            this.button2.Location = new System.Drawing.Point(29, 273);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(134, 23);
+            this.button2.Size = new System.Drawing.Size(131, 20);
             this.button2.TabIndex = 2;
             this.button2.Text = "Предыдущая запись";
             this.button2.UseVisualStyleBackColor = true;
@@ -108,9 +109,9 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(179, 269);
+            this.button3.Location = new System.Drawing.Point(179, 337);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
+            this.button3.Size = new System.Drawing.Size(134, 20);
             this.button3.TabIndex = 6;
             this.button3.Text = "Добавить";
             this.button3.UseVisualStyleBackColor = true;
@@ -196,14 +197,6 @@
             this.textBox6.Size = new System.Drawing.Size(122, 58);
             this.textBox6.TabIndex = 12;
             // 
-            // textBox7
-            // 
-            this.textBox7.Enabled = false;
-            this.textBox7.Location = new System.Drawing.Point(145, 234);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(122, 20);
-            this.textBox7.TabIndex = 11;
-            // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -215,9 +208,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(29, 269);
+            this.button4.Location = new System.Drawing.Point(29, 337);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(131, 20);
             this.button4.TabIndex = 18;
             this.button4.Text = "Изменить";
             this.button4.UseVisualStyleBackColor = true;
@@ -225,9 +218,9 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(111, 336);
+            this.button5.Location = new System.Drawing.Point(29, 363);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(134, 23);
+            this.button5.Size = new System.Drawing.Size(284, 20);
             this.button5.TabIndex = 19;
             this.button5.Text = "Режим таблицы";
             this.button5.UseVisualStyleBackColor = true;
@@ -250,11 +243,33 @@
             this.textBox8.Size = new System.Drawing.Size(122, 20);
             this.textBox8.TabIndex = 20;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Enabled = false;
+            this.checkBox1.Location = new System.Drawing.Point(145, 236);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 22;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(29, 308);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(131, 20);
+            this.button6.TabIndex = 23;
+            this.button6.Text = "Удалить";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.Button6_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(328, 384);
+            this.ClientSize = new System.Drawing.Size(325, 393);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBox8);
             this.Controls.Add(this.button5);
@@ -265,7 +280,6 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox6);
-            this.Controls.Add(this.textBox7);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -280,6 +294,7 @@
             this.Name = "Form1";
             this.Text = "Просмотр данных о книгах";
             this.Activated += new System.EventHandler(this.Form1_Activated);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
@@ -305,12 +320,13 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox textBox5;
         private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox7;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox textBox8;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button6;
     }
 }
 

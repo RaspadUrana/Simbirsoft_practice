@@ -10,11 +10,14 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
+using NLog;
 
 namespace Work_with_xml
 {
     public partial class Form3 : Form
     {
+        Logger logErr = LogManager.GetLogger("Errors");
+        Logger logInfo = LogManager.GetLogger("Info");
 
         public Form3()
         {
@@ -32,11 +35,11 @@ namespace Work_with_xml
             public string Price { get; set; }
             public string PublishDate { get; set; }
             public string Description { get; set; }
-            public string InStorage { get; set; }
+            public bool InStorage { get; set; }
             public Book()
             { }
 
-            public Book(Int32 Id, string author, string title, string genre, string price, string publish_date, string description, string in_storage) 
+            public Book(Int32 Id, string author, string title, string genre, string price, string publish_date, string description, bool in_storage) 
             {
                 id = Id;
                 Author = author;
@@ -70,49 +73,56 @@ namespace Work_with_xml
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            
-            List<Book> books = new List<Book>();
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Catalog";
-            xRoot.Namespace = null;
-            xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(List<Book>), xRoot);
-            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            try
             {
-                books = (List<Book>)formatter.Deserialize(fs);
-            }
-            if (checkBox1.Checked)
-            {
-                books.Add(new Book()
+                List<Book> books = new List<Book>();
+                XmlRootAttribute xRoot = new XmlRootAttribute();
+                xRoot.ElementName = "Catalog";
+                xRoot.Namespace = null;
+                xRoot.IsNullable = true;
+                XmlSerializer formatter = new XmlSerializer(typeof(List<Book>), xRoot);
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
                 {
-                    //Последнее= наибольшее ? нет ну и ладно...
-                    id = Convert.ToInt32(textBox8.Text),
-                    Author = textBox1.Text,
-                    Title = textBox2.Text,
-                    Genre = textBox3.Text,
-                    Price = textBox4.Text,
-                    PublishDate = textBox5.Text,
-                    Description = textBox6.Text,
-                    InStorage = textBox7.Text
-                });
-            }
-            else
-            {
-                books.Add(new Book()
+                    books = (List<Book>)formatter.Deserialize(fs);
+                }
+                if (checkBox1.Checked)
                 {
-                    id = books[books.Count-1].id+1,
-                    Author = textBox1.Text,
-                    Title = textBox2.Text,
-                    Genre = textBox3.Text,
-                    Price = textBox4.Text,
-                    PublishDate = textBox5.Text,
-                    Description = textBox6.Text,
-                    InStorage = textBox7.Text
-                });
+                    books.Add(new Book()
+                    {
+                        //Последнее= наибольшее ? нет ну и ладно...
+                        id = Convert.ToInt32(textBox8.Text),
+                        Author = textBox1.Text,
+                        Title = textBox2.Text,
+                        Genre = textBox3.Text,
+                        Price = textBox4.Text,
+                        PublishDate = textBox5.Text,
+                        Description = textBox6.Text,
+                        InStorage = checkBox2.Checked
+                    });
+                }
+                else
+                {
+                    books.Add(new Book()
+                    {
+                        id = books[books.Count - 1].id + 1,
+                        Author = textBox1.Text,
+                        Title = textBox2.Text,
+                        Genre = textBox3.Text,
+                        Price = textBox4.Text,
+                        PublishDate = textBox5.Text,
+                        Description = textBox6.Text,
+                        InStorage = checkBox2.Checked
+                    });
+                }
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                {
+                    formatter.Serialize(fs, books);
+                }
+                logInfo.Info("Добавлена новая запись");
             }
-            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            catch
             {
-                formatter.Serialize(fs, books);
+                logErr.Error("Ошибка создания новой записи");
             }
             this.Close();
         }

@@ -44,6 +44,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(487, 321);
             this.dataGridView1.TabIndex = 18;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellContentClick);
+            this.dataGridView1.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView1_CellValueChanged);
             // 
             // button1
             // 
@@ -59,7 +60,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(93, 356);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(133, 23);
+            this.button2.Size = new System.Drawing.Size(185, 23);
             this.button2.TabIndex = 20;
             this.button2.Text = "Редактировать";
             this.button2.UseVisualStyleBackColor = true;

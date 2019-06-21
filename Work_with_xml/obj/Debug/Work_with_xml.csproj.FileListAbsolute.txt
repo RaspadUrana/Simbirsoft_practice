@@ -21,3 +21,7 @@ D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_
 D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.exe
 D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.pdb
 D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.Form3.resources
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\NLog.config
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\NLog.dll
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\bin\Debug\NLog.xml
+D:\Practice\Otcat2\Simbirsoft_practice-master\Work_with_xml\obj\Debug\Work_with_xml.csproj.CopyComplete
