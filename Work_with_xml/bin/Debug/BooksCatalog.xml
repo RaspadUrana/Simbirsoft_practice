@@ -10,17 +10,6 @@
       with XML.</Description>
     <InStorage>true</InStorage>
   </Book>
-  <Book id="50102">
-    <Author>Garcia, Debra</Author>
-    <Title>Midnight Rain</Title>
-    <Genre>Fantasy</Genre>
-    <Price>5.95</Price>
-    <PublishDate>2000-12-16</PublishDate>
-    <Description>A former architect battles corporate zombies,   
-      an evil sorceress, and her own childhood to become queen   
-      of the world.</Description>
-    <InStorage>false</InStorage>
-  </Book>
   <Book id="50103">
     <Author>Rajput, Dinesh</Author>
     <Title>Hands-On Microservices – Monitoring and Testing</Title>

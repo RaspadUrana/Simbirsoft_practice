@@ -117,7 +117,7 @@ namespace Work_with_xml
                     xRoot.IsNullable = true;
                     XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
                     button2.Text = "Редактировать";
-                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.Create))
                     {
                         formatter.Serialize(fs, newbook);
                     }

@@ -252,7 +252,7 @@ namespace Work_with_xml
                     newbook[i].PublishDate = textBox5.Text;
                     newbook[i].Description = textBox6.Text;
                     newbook[i].InStorage = checkBox1.Checked;
-                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.Create))
                     {
                         formatter.Serialize(fs, newbook);
                         /*newbook[i].Author = textBox1.Text;
@@ -332,12 +332,12 @@ namespace Work_with_xml
         private void Button6_Click(object sender, EventArgs e)
         {
             logInfo.Info("Удалена запись № {String}",i);
-            Book[] newbook1 = new Book[newbook.Length];
+            Book[] newbook1 = new Book [newbook.Length-1];
             bool fl = false;
             XmlRootAttribute xRoot = new XmlRootAttribute();
             xRoot.ElementName = "Catalog";
             xRoot.Namespace = null;
-            xRoot.IsNullable = false;
+            xRoot.IsNullable = true;
             XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
             /*for (int j = 0; j < newbook.Length - 1; j++)
             {
@@ -364,12 +364,26 @@ namespace Work_with_xml
                         }
                     }
                 }
+                
 
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.Create))
                 {
                     formatter.Serialize(fs, newbook1);
 
                 }//
+
+            }
+            catch
+            {
+                logErr.Error("Ошибка повторной записи при удалении записи");
+            }
+            try
+            { 
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                {
+                    newbook = (Book[])formatter.Deserialize(fs);
+
+                }
                 if (i == newbook.Length)
                 {
                     i = i - 1;
@@ -384,26 +398,14 @@ namespace Work_with_xml
                 }
                 else
                 {
-                    textBox1.Text = newbook[i + 1].Author;
-                    textBox8.Text = newbook[i + 1].id.ToString();
-                    textBox2.Text = newbook[i + 1].Title;
-                    textBox3.Text = newbook[i + 1].Genre;
-                    textBox4.Text = newbook[i + 1].Price;
-                    textBox5.Text = newbook[i + 1].PublishDate;
-                    textBox6.Text = newbook[i + 1].Description;
-                    checkBox1.Checked = newbook[i + 1].InStorage;
-                }
-            }
-            catch
-            {
-                logErr.Error("Ошибка повторной записи при удалении записи");
-            }
-            try
-            { 
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
-                {
-                    newbook = (Book[])formatter.Deserialize(fs);
-
+                    textBox1.Text = newbook[i].Author;
+                    textBox8.Text = newbook[i].id.ToString();
+                    textBox2.Text = newbook[i].Title;
+                    textBox3.Text = newbook[i].Genre;
+                    textBox4.Text = newbook[i].Price;
+                    textBox5.Text = newbook[i].PublishDate;
+                    textBox6.Text = newbook[i].Description;
+                    checkBox1.Checked = newbook[i].InStorage;
                 }
             }
             catch
