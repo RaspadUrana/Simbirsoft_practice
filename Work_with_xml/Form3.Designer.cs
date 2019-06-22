@@ -100,6 +100,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(122, 20);
             this.textBox5.TabIndex = 35;
+            this.textBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox5_KeyPress);
             // 
             // textBox6
             // 
@@ -159,6 +160,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(122, 20);
             this.textBox4.TabIndex = 27;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox4_KeyPress);
             // 
             // textBox3
             // 
@@ -225,7 +227,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(369, 369);
+            this.ClientSize = new System.Drawing.Size(369, 332);
             this.Controls.Add(this.checkBox2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkBox1);
@@ -248,6 +250,7 @@
             this.Controls.Add(this.textBox1);
             this.Name = "Form3";
             this.Text = "Form3";
+            this.Activated += new System.EventHandler(this.Form3_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

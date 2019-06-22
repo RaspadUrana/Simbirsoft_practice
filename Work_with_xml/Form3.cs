@@ -126,6 +126,39 @@ namespace Work_with_xml
             }
             this.Close();
         }
+
+        private void TextBox5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45 && ch != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Form3_Activated(object sender, EventArgs e)
+        {
+            List<Book> books = new List<Book>();
+            XmlRootAttribute xRoot = new XmlRootAttribute();
+            xRoot.ElementName = "Catalog";
+            xRoot.Namespace = null;
+            xRoot.IsNullable = true;
+            XmlSerializer formatter = new XmlSerializer(typeof(List<Book>), xRoot);
+            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            {
+                books = (List<Book>)formatter.Deserialize(fs);
+            }
+            textBox8.Text = (books[books.Count-1].id + 1).ToString();
+        }
     }
 }
 

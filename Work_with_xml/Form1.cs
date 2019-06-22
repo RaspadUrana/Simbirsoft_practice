@@ -407,11 +407,50 @@ namespace Work_with_xml
                     textBox6.Text = newbook[i].Description;
                     checkBox1.Checked = newbook[i].InStorage;
                 }
+                if (i + 1 == newbook.Length)
+                {
+                    button1.Enabled = false;
+                }
+                else
+                {
+                    button1.Enabled = true;
+                };
+                if (i - 1 != -1)
+                {
+                    button2.Enabled = true;
+                }
+                else
+                {
+                    button2.Enabled = false;
+                };
             }
             catch
             {
                 logErr.Error("Ошибка чтения изменений после удалении записи");
             }
+        }
+
+        private void TextBox4_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox5_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 45 && ch != 46)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

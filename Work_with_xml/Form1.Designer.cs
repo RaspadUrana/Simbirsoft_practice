@@ -51,6 +51,7 @@
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,14 +60,14 @@
             this.textBox1.Enabled = false;
             this.textBox1.Location = new System.Drawing.Point(145, 36);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(122, 20);
+            this.textBox1.Size = new System.Drawing.Size(168, 20);
             this.textBox1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(179, 273);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 20);
+            this.button1.Size = new System.Drawing.Size(134, 25);
             this.button1.TabIndex = 1;
             this.button1.Text = "Следующая запись";
             this.button1.UseVisualStyleBackColor = true;
@@ -77,7 +78,7 @@
             this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(29, 273);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(131, 20);
+            this.button2.Size = new System.Drawing.Size(131, 25);
             this.button2.TabIndex = 2;
             this.button2.Text = "Предыдущая запись";
             this.button2.UseVisualStyleBackColor = true;
@@ -88,7 +89,7 @@
             this.textBox2.Enabled = false;
             this.textBox2.Location = new System.Drawing.Point(145, 62);
             this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(122, 20);
+            this.textBox2.Size = new System.Drawing.Size(168, 20);
             this.textBox2.TabIndex = 3;
             // 
             // textBox3
@@ -96,7 +97,7 @@
             this.textBox3.Enabled = false;
             this.textBox3.Location = new System.Drawing.Point(145, 89);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(122, 20);
+            this.textBox3.Size = new System.Drawing.Size(168, 20);
             this.textBox3.TabIndex = 4;
             // 
             // textBox4
@@ -104,14 +105,15 @@
             this.textBox4.Enabled = false;
             this.textBox4.Location = new System.Drawing.Point(145, 116);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(122, 20);
+            this.textBox4.Size = new System.Drawing.Size(168, 20);
             this.textBox4.TabIndex = 5;
+            this.textBox4.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox4_KeyPress);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(179, 337);
+            this.button3.Location = new System.Drawing.Point(179, 332);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(134, 20);
+            this.button3.Size = new System.Drawing.Size(134, 25);
             this.button3.TabIndex = 6;
             this.button3.Text = "Добавить";
             this.button3.UseVisualStyleBackColor = true;
@@ -185,8 +187,9 @@
             this.textBox5.Enabled = false;
             this.textBox5.Location = new System.Drawing.Point(145, 143);
             this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(122, 20);
+            this.textBox5.Size = new System.Drawing.Size(168, 20);
             this.textBox5.TabIndex = 13;
+            this.textBox5.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBox5_KeyPress);
             // 
             // textBox6
             // 
@@ -194,7 +197,7 @@
             this.textBox6.Location = new System.Drawing.Point(145, 170);
             this.textBox6.Multiline = true;
             this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(122, 58);
+            this.textBox6.Size = new System.Drawing.Size(168, 58);
             this.textBox6.TabIndex = 12;
             // 
             // dataGridView1
@@ -208,9 +211,9 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(29, 337);
+            this.button4.Location = new System.Drawing.Point(29, 332);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(131, 20);
+            this.button4.Size = new System.Drawing.Size(131, 25);
             this.button4.TabIndex = 18;
             this.button4.Text = "Изменить";
             this.button4.UseVisualStyleBackColor = true;
@@ -220,7 +223,7 @@
             // 
             this.button5.Location = new System.Drawing.Point(29, 363);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(284, 20);
+            this.button5.Size = new System.Drawing.Size(284, 25);
             this.button5.TabIndex = 19;
             this.button5.Text = "Режим таблицы";
             this.button5.UseVisualStyleBackColor = true;
@@ -240,7 +243,7 @@
             this.textBox8.Enabled = false;
             this.textBox8.Location = new System.Drawing.Point(145, 12);
             this.textBox8.Name = "textBox8";
-            this.textBox8.Size = new System.Drawing.Size(122, 20);
+            this.textBox8.Size = new System.Drawing.Size(168, 20);
             this.textBox8.TabIndex = 20;
             // 
             // checkBox1
@@ -255,19 +258,30 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(29, 308);
+            this.button6.Location = new System.Drawing.Point(29, 303);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(131, 20);
+            this.button6.Size = new System.Drawing.Size(131, 25);
             this.button6.TabIndex = 23;
             this.button6.Text = "Удалить";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.Button6_Click);
             // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(182, 394);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(131, 25);
+            this.button7.TabIndex = 24;
+            this.button7.Text = "Выход";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.Button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(325, 393);
+            this.ClientSize = new System.Drawing.Size(330, 437);
+            this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label8);
@@ -327,6 +341,7 @@
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button7;
     }
 }
 
