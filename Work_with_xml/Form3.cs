@@ -52,7 +52,7 @@ namespace Work_with_xml
             }
 
         }
-
+        public Book[] newbook;
         private void CheckBox1_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
@@ -73,50 +73,69 @@ namespace Work_with_xml
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            try
+            XmlRootAttribute xRoot = new XmlRootAttribute();
+            xRoot.ElementName = "Catalog";
+            xRoot.Namespace = null;
+            xRoot.IsNullable = true;
+            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+            using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
             {
-                List<Book> books = new List<Book>();
-                XmlRootAttribute xRoot = new XmlRootAttribute();
-                xRoot.ElementName = "Catalog";
-                xRoot.Namespace = null;
-                xRoot.IsNullable = true;
-                XmlSerializer formatter = new XmlSerializer(typeof(List<Book>), xRoot);
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                newbook = (Book[])formatter.Deserialize(fs);
+            }
+            
+            Book[] newbook1 = new Book[newbook.Length+1];
+            newbook1[newbook.Length] = new Book();
+
+            for (int j = 0; j < newbook.Length; j++)
+            {
+                newbook1[j] = newbook[j];
+            }
+            
+            if (checkBox1.Checked)
+            {
+
+                //Последнее= наибольшее ? нет ну и ладно...
+                newbook1[newbook.Length ].id = Convert.ToInt32(textBox8.Text);
+                newbook1[newbook.Length ].Author = textBox1.Text;
+                newbook1[newbook.Length ].Title = textBox2.Text;
+                newbook1[newbook.Length ].Genre = textBox3.Text;
+                newbook1[newbook.Length ].Price = textBox4.Text;
+                newbook1[newbook.Length ].PublishDate = textBox5.Text;
+                newbook1[newbook.Length ].Description = textBox6.Text;
+                newbook1[newbook.Length ].InStorage = checkBox2.Checked;
+
+            }
+            else
+            {
+                if (newbook.Length != 0)
                 {
-                    books = (List<Book>)formatter.Deserialize(fs);
-                }
-                if (checkBox1.Checked)
-                {
-                    books.Add(new Book()
-                    {
-                        //Последнее= наибольшее ? нет ну и ладно...
-                        id = Convert.ToInt32(textBox8.Text),
-                        Author = textBox1.Text,
-                        Title = textBox2.Text,
-                        Genre = textBox3.Text,
-                        Price = textBox4.Text,
-                        PublishDate = textBox5.Text,
-                        Description = textBox6.Text,
-                        InStorage = checkBox2.Checked
-                    });
+                    newbook1[newbook.Length].id = newbook[newbook.Length-1].id + 1;
+                    newbook1[newbook.Length].Author = textBox1.Text;
+                    newbook1[newbook.Length].Title = textBox2.Text;
+                    newbook1[newbook.Length].Genre = textBox3.Text;
+                    newbook1[newbook.Length].Price = textBox4.Text;
+                    newbook1[newbook.Length].PublishDate = textBox5.Text;
+                    newbook1[newbook.Length].Description = textBox6.Text;
+                    newbook1[newbook.Length].InStorage = checkBox2.Checked;
                 }
                 else
                 {
-                    books.Add(new Book()
-                    {
-                        id = books[books.Count - 1].id + 1,
-                        Author = textBox1.Text,
-                        Title = textBox2.Text,
-                        Genre = textBox3.Text,
-                        Price = textBox4.Text,
-                        PublishDate = textBox5.Text,
-                        Description = textBox6.Text,
-                        InStorage = checkBox2.Checked
-                    });
+                    newbook1[newbook.Length + 1].id = 1;
+                    newbook1[newbook.Length + 1].Author = textBox1.Text;
+                    newbook1[newbook.Length + 1].Title = textBox2.Text;
+                    newbook1[newbook.Length + 1].Genre = textBox3.Text;
+                    newbook1[newbook.Length + 1].Price = textBox4.Text;
+                    newbook1[newbook.Length + 1].PublishDate = textBox5.Text;
+                    newbook1[newbook.Length + 1].Description = textBox6.Text;
+                    newbook1[newbook.Length + 1].InStorage = checkBox2.Checked;
                 }
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+            }
+            try
+            {
+
+                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.Create))
                 {
-                    formatter.Serialize(fs, books);
+                    formatter.Serialize(fs, newbook1);
                 }
                 logInfo.Info("Добавлена новая запись");
             }
@@ -147,17 +166,32 @@ namespace Work_with_xml
 
         private void Form3_Activated(object sender, EventArgs e)
         {
-            List<Book> books = new List<Book>();
             XmlRootAttribute xRoot = new XmlRootAttribute();
             xRoot.ElementName = "Catalog";
             xRoot.Namespace = null;
             xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(List<Book>), xRoot);
+            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
             using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
             {
-                books = (List<Book>)formatter.Deserialize(fs);
+                newbook = (Book[])formatter.Deserialize(fs);
             }
-            textBox8.Text = (books[books.Count-1].id + 1).ToString();
+            if (newbook.Length != 0)
+            {
+                textBox8.Text = (newbook[newbook.Length - 1].id + 1).ToString();
+            }
+            else
+            {
+                textBox8.Text = "1";
+            }
+        }
+
+        private void TextBox8_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            char ch = e.KeyChar;
+            if (!Char.IsDigit(ch) && ch != 8)
+            {
+                e.Handled = true;
+            }
         }
     }
 }

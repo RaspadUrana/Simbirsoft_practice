@@ -43,14 +43,14 @@ namespace Work_with_xml
             public Int32 id { get; set; }               //без паблика не уверен робит ли 
             public string Title { get; set; }
             public string Genre { get; set; }
-            public string Price { get; set; }
+            public double Price { get; set; }
             public string PublishDate { get; set; }
             public string Description { get; set; }
             public bool InStorage { get; set; }
             public Book()
             { }
 
-            public Book(Int32 Id, string author, string title, string genre, string price, string publish_date, string description, bool in_storage)
+            public Book(Int32 Id, string author, string title, string genre, double price, string publish_date, string description, bool in_storage)
             {
                 id = Id;
                 Author = author;
@@ -80,12 +80,12 @@ namespace Work_with_xml
             {
                 i = (i + 1);//мотаем счётчик вперёд
 
-                dataGridView1.DataSource = newbook;
+                //dataGridView1.DataSource = newbook;
                 textBox1.Text = newbook[i].Author;
                 textBox2.Text = newbook[i].Title;
                 textBox8.Text = newbook[i].id.ToString();
                 textBox3.Text = newbook[i].Genre;
-                textBox4.Text = newbook[i].Price;
+                textBox4.Text = newbook[i].Price.ToString();
                 textBox5.Text = newbook[i].PublishDate;
                 textBox6.Text = newbook[i].Description;
                 checkBox1.Checked = newbook[i].InStorage;
@@ -112,12 +112,12 @@ namespace Work_with_xml
             {
                 i = --i;//мотаем счётчик назад на для того чтобы показалась пред. запись
 
-                dataGridView1.DataSource = newbook;
+                //dataGridView1.DataSource = newbook;
                 textBox1.Text = newbook[i].Author;
                 textBox2.Text = newbook[i].Title;
                 textBox8.Text = newbook[i].id.ToString();
                 textBox3.Text = newbook[i].Genre;
-                textBox4.Text = newbook[i].Price;
+                textBox4.Text = newbook[i].Price.ToString();
                 textBox5.Text = newbook[i].PublishDate;
                 textBox6.Text = newbook[i].Description;
                 checkBox1.Checked = newbook[i].InStorage;
@@ -169,12 +169,12 @@ namespace Work_with_xml
                 using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
                 {
                     newbook = (Book[])formatter.Deserialize(fs);
-                    dataGridView1.DataSource = newbook;
+                    //dataGridView1.DataSource = newbook;
                     textBox1.Text = newbook[i].Author;
                     textBox8.Text = newbook[i].id.ToString();
                     textBox2.Text = newbook[i].Title;
                     textBox3.Text = newbook[i].Genre;
-                    textBox4.Text = newbook[i].Price;
+                    textBox4.Text = newbook[i].Price.ToString();
                     textBox5.Text = newbook[i].PublishDate;
                     textBox6.Text = newbook[i].Description;
                     checkBox1.Checked = newbook[i].InStorage;
@@ -214,6 +214,7 @@ namespace Work_with_xml
                     textBox4.Enabled = true;
                     textBox5.Enabled = true;
                     textBox6.Enabled = true;
+                    textBox8.Enabled = true;
                     checkBox1.Enabled = true;
                     //button1.Enabled = false; //в случае если мы выключаем кнопки переключения записей нужно будет делать несколько не  нужных проверок
                     //button2.Enabled = false; //а в случае если не выключаем на функционал повлиять не должно
@@ -230,6 +231,7 @@ namespace Work_with_xml
                     textBox4.Enabled = false;
                     textBox5.Enabled = false;
                     textBox6.Enabled = false;
+                    textBox8.Enabled = false;
                     checkBox1.Enabled = false;
                     //button1.Enabled = true;
                     //button2.Enabled = true;
@@ -245,10 +247,12 @@ namespace Work_with_xml
                     // сериализация
                     //Ломает файл 
                     //Через раз?
+                    //fixed
+                    newbook[i].id = Convert.ToInt32(textBox8.Text);
                     newbook[i].Author = textBox1.Text;
                     newbook[i].Title = textBox2.Text;
                     newbook[i].Genre = textBox3.Text;
-                    newbook[i].Price = textBox4.Text;
+                    newbook[i].Price = Convert.ToDouble(textBox4.Text);
                     newbook[i].PublishDate = textBox5.Text;
                     newbook[i].Description = textBox6.Text;
                     newbook[i].InStorage = checkBox1.Checked;
@@ -303,24 +307,32 @@ namespace Work_with_xml
                 using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
                 {
                     newbook = (Book[])formatter.Deserialize(fs);
-                    dataGridView1.DataSource = newbook;
+                   // dataGridView1.DataSource = newbook;
                     textBox1.Text = newbook[i].Author;
                     textBox8.Text = newbook[i].id.ToString();
                     textBox2.Text = newbook[i].Title;
                     textBox3.Text = newbook[i].Genre;
-                    textBox4.Text = newbook[i].Price;
+                    textBox4.Text = newbook[i].Price.ToString();
                     textBox5.Text = newbook[i].PublishDate;
                     textBox6.Text = newbook[i].Description;
                     checkBox1.Checked = newbook[i].InStorage;
-                    if (newbook.Length == i)
-                    {
-                        button1.Enabled = false;
-                    };
+
                 }
             }
             catch
             {
                 logErr.Error("Ошибка открытия файла");
+            }
+            if (newbook.Length == i)
+            {
+                button1.Enabled = false;
+            };
+            if (newbook.Length == 0)
+            {
+                button4.Enabled = false;
+                button1.Enabled = false;
+                //button2.Enabled = false;
+                button6.Enabled = false;
             }
         }
 
@@ -331,59 +343,79 @@ namespace Work_with_xml
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            logInfo.Info("Удалена запись № {String}",i);
-            Book[] newbook1 = new Book [newbook.Length-1];
-            bool fl = false;
-            XmlRootAttribute xRoot = new XmlRootAttribute();
-            xRoot.ElementName = "Catalog";
-            xRoot.Namespace = null;
-            xRoot.IsNullable = true;
-            XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
-            /*for (int j = 0; j < newbook.Length - 1; j++)
+            if (newbook.Length != 0)
             {
-                newbook1[j] = newbook[j];
-            }*/
-
-            try
-            {
-                for (int j = 0; j < newbook.Length; j++)
+                logInfo.Info("Удалена запись № {String}", i);
+                Book[] newbook1 = new Book[newbook.Length - 1];
+                bool fl = false;
+                XmlRootAttribute xRoot = new XmlRootAttribute();
+                xRoot.ElementName = "Catalog";
+                xRoot.Namespace = null;
+                xRoot.IsNullable = true;
+                XmlSerializer formatter = new XmlSerializer(typeof(Book[]), xRoot);
+                /*for (int j = 0; j < newbook.Length - 1; j++)
                 {
-                    if (i == j)
+                    newbook1[j] = newbook[j];
+                }*/
+
+                try
+                {
+                    for (int j = 0; j < newbook.Length; j++)
                     {
-                        fl = true;
-                    }
-                    else
-                    {
-                        if (fl)
+                        if (i == j)
                         {
-                            newbook1[j - 1] = newbook[j];
+                            fl = true;
                         }
                         else
                         {
-                            newbook1[j] = newbook[j];
+                            if (fl)
+                            {
+                                newbook1[j - 1] = newbook[j];
+                            }
+                            else
+                            {
+                                newbook1[j] = newbook[j];
+                            }
                         }
                     }
-                }
-                
+
 
                     using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.Create))
-                {
-                    formatter.Serialize(fs, newbook1);
+                    {
+                        formatter.Serialize(fs, newbook1);
 
-                }//
-
-            }
-            catch
-            {
-                logErr.Error("Ошибка повторной записи при удалении записи");
-            }
-            try
-            { 
-                using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
-                {
-                    newbook = (Book[])formatter.Deserialize(fs);
+                    }//
 
                 }
+                catch
+                {
+                    logErr.Error("Ошибка повторной записи при удалении записи");
+                }
+                try
+                {
+                    using (FileStream fs = new FileStream("BooksCatalog.xml", FileMode.OpenOrCreate))
+                    {
+                        newbook = (Book[])formatter.Deserialize(fs);
+
+                    }
+
+                }
+                catch
+                {
+                    logErr.Error("Ошибка чтения изменений после удалении записи");
+                }
+            }
+            else
+            {
+                logErr.Error("Попытка работы с пустым файлом");
+                if (newbook.Length == 0)
+                {
+                    button1.Enabled = false;
+                    button2.Enabled = false;
+                }
+            }
+            if (newbook.Length != 0)
+            {
                 if (i == newbook.Length)
                 {
                     i = i - 1;
@@ -391,7 +423,7 @@ namespace Work_with_xml
                     textBox8.Text = newbook[i].id.ToString();
                     textBox2.Text = newbook[i].Title;
                     textBox3.Text = newbook[i].Genre;
-                    textBox4.Text = newbook[i].Price;
+                    textBox4.Text = newbook[i].Price.ToString();
                     textBox5.Text = newbook[i].PublishDate;
                     textBox6.Text = newbook[i].Description;
                     checkBox1.Checked = newbook[i].InStorage;
@@ -402,7 +434,7 @@ namespace Work_with_xml
                     textBox8.Text = newbook[i].id.ToString();
                     textBox2.Text = newbook[i].Title;
                     textBox3.Text = newbook[i].Genre;
-                    textBox4.Text = newbook[i].Price;
+                    textBox4.Text = newbook[i].Price.ToString();
                     textBox5.Text = newbook[i].PublishDate;
                     textBox6.Text = newbook[i].Description;
                     checkBox1.Checked = newbook[i].InStorage;
@@ -424,16 +456,25 @@ namespace Work_with_xml
                     button2.Enabled = false;
                 };
             }
-            catch
+            else
             {
-                logErr.Error("Ошибка чтения изменений после удалении записи");
+                button6.Enabled = false;
+                button4.Enabled = false;
+                button1.Enabled = false;
+                button2.Enabled = false;
+                textBox1.Text = "";
+                textBox8.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
             }
         }
 
         private void TextBox4_KeyPress(object sender, KeyPressEventArgs e)
         {
             char ch = e.KeyChar;
-            if (!Char.IsDigit(ch) && ch != 8 && ch != 45)
+            if (!Char.IsDigit(ch) && ch != 8 && ch != 46)
             {
                 e.Handled = true;
             }
